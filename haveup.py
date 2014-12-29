@@ -77,6 +77,11 @@ class HaveUp(object):
 		else:
 			self.keep_checksum = False
 		
+		if args.just_checksum:
+			self.just_checksum = True
+		else:
+			self.just_checksum = False
+		
 		self.uploadFiles()
 	
 	def load_group(self, grp = None):
@@ -113,6 +118,8 @@ class HaveUp(object):
 			
 			if not ok:
 				break
+			elif self.just_checksum:
+				continue
 			
 			dl_url = self.file_class["publicurl"] + self.subdir + "/" + target_name
 			upload_to = self.file_class["uploadurl"] + "/" + self.subdir + "/" + target_name
@@ -170,6 +177,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="Upload file(s) and print links")
 	parser.add_argument('-c', '--class', dest='file_class', default='DEFAULT', help="Use settings from specified class")
 	parser.add_argument('-d', '--dir', dest='subdir', default='', help="Upload files to specified subdirectory")
+	parser.add_argument('-j', '--just-checksum', action='store_true', dest='just_checksum', help="Compute and upload only checksums")
 	parser.add_argument('-k', '--checksum', dest='checksum', default=None, help="Compute and upload checksum")
 	parser.add_argument('-e', '--keep-checksum', action='store_true', dest='keep_checksum', help="Keep checksums locally after upload")
 	parser.add_argument('-s', '--hash-name', action='store_true', dest='hash', help="Hash file name for every file")
