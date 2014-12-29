@@ -31,7 +31,7 @@ class HaveUp(object):
 		self.config.read('/home/aither/.config/HaveFun.cz/HaveUp.conf')
 		
 		if len(self.files) < 1:
-			print("Please specify file name")
+			print("Please specify file name", file=sys.stderr)
 			exit(1)
 		
 		self.has_more = len(self.files) > 1
@@ -46,7 +46,7 @@ class HaveUp(object):
 					break
 			else:
 				print("Group '{0}' not found".format(args.file_class), file=sys.stderr)
-				sys.exit(1)
+				exit(1)
 		
 		if args.subdir:
 			self.subdir = "/" + args.subdir
